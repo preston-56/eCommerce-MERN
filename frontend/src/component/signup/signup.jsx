@@ -129,7 +129,7 @@ const SignUp = () => {
         </form>
         <p className="text-left text-sm mt-2">
           Already have an account ?{" "}
-          <Link to={"login"} className="text-blue-500 underline">
+          <Link to={"/login"} className="text-blue-500 underline">
             Login
           </Link>
         </p>
