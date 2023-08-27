@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import loginSignupImage from "../../assets/images/login.gif";
 import { BiHide, BiShow } from "react-icons/bi";
 import { Link, useNavigate } from "react-router-dom";
+import { ImagetoBase64 } from "../../utils/imagebase";
 
 const SignUp = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [data, setData] = useState({
@@ -13,6 +14,7 @@ const SignUp = () => {
     email: "",
     password: "",
     confirmPassword: "",
+    image:"",
   });
   console.log(data);
   const handleShowPassword = () => {
@@ -33,20 +35,31 @@ const SignUp = () => {
     });
   };
 
+  const handleUploadProfileImage = async(e) => {
+    const data = await ImagetoBase64(e.target.files[0])
+    console.log(data);
+
+    setData((preve)=>{
+        return {
+            ...preve,
+            image : data
+        }
+
+    })
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const {firstName, email, password, confirmPassword} = data
-    if(firstName && email && password && confirmPassword) {
-        if(password === confirmPassword) {
-            alert('successfull')
-            navigate('/login')
-        }
-        else{
-            alert('password and confirm password do not match')
-        }
-    }
-    else {
-        alert('Please enter required fields')
+    const { firstName, email, password, confirmPassword } = data;
+    if (firstName && email && password && confirmPassword) {
+      if (password === confirmPassword) {
+        alert("successfull");
+        navigate("/login");
+      } else {
+        alert("password and confirm password do not match");
+      }
+    } else {
+      alert("Please enter required fields");
     }
   };
 
@@ -54,8 +67,14 @@ const SignUp = () => {
     <div className="p-2 md:p-4">
       <div className="w-full max-w-sm bg-white m-auto flex flex-col p-4">
         {/* <h1 className='text-center text-2xl font-bold'>Sign up</h1> */}
-        <div className="w-20 overflow-hidden rounded-full drop-shadow-md m-auto ">
-          <img src={loginSignupImage} className="w-full" alt=".icon" />
+        <div className="w-20 overflow-hidden rounded-full drop-shadow-md m-auto relative ">
+          <img src={data.image ? data.image : loginSignupImage} className="w-full" alt=".icon" />
+          <label htmlFor="profileImage">
+            <div className="absolute bottom-0 h-1/3 bg-slate-500 w-full text-center cursor-pointer">
+              <p className="text-sm p-1 text-white">Upload</p>
+            </div>
+            <input type={"file"} id="profileImage" accept="image/*" className="hidden" onChange={handleUploadProfileImage} />
+          </label>
         </div>
         <form className="w-full py-3 flex flex-col" onSubmit={handleSubmit}>
           <label htmlFor="firstName">First Name</label>
