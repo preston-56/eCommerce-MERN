@@ -11,7 +11,7 @@ const Header = () => {
       <div className="flex items-center h-full justify-between">
         <Link to={""}>
           <div className="h-16">
-            <img src={logo} className="h-full" alt="icon" />
+            <img src={logo} className="h-full w-30" alt="icon" />
           </div>
         </Link>
 
