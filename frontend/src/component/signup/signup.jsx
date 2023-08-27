@@ -24,9 +24,9 @@ const SignUp = () => {
 
   const handleOnChange = (e) => {
     const { name, value } = e.target; // Destructure name and value from e.target
-    setData((prev) => {
+    setData((preve) => {
       return {
-        ...prev,
+        ...preve,
         [name]: value,
       };
     });
@@ -34,6 +34,18 @@ const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const {firstName, email, password, confirmPassword} = data
+    if(firstName && email && password && confirmPassword) {
+        if(password === confirmPassword) {
+            alert('successfull')
+        }
+        else{
+            alert('password and confirm password do not match')
+        }
+    }
+    else {
+        alert('Please enter required fields')
+    }
   };
 
   return (
@@ -96,9 +108,9 @@ const SignUp = () => {
           <label htmlFor="confirmpassword">Confirm Password</label>
           <div className="flex px-2 py-1 bg-slate-200 rounded mt-1 mb-2 focus-within:outline focus-within:outline-blue-300">
             <input
-              type={showConfirmPassword ? "text" : "confirmpassword"}
+              type={showConfirmPassword ? "text" : "password"}
               id="confirmpassword"
-              name="confirmpassword"
+              name="confirmPassword"
               className="w-full bg-slate-200 border-none outline-none"
               value={data.confirmPassword}
               onChange={handleOnChange}
