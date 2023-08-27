@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import loginSignupImage from "../../assets/images/login.gif";
 import { BiHide, BiShow } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [data, setData] = useState({
@@ -38,6 +39,7 @@ const SignUp = () => {
     if(firstName && email && password && confirmPassword) {
         if(password === confirmPassword) {
             alert('successfull')
+            navigate('/login')
         }
         else{
             alert('password and confirm password do not match')
