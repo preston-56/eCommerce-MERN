@@ -32,6 +32,10 @@ const SignUp = () => {
     });
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div className="p-2 md:p-4">
       <div className="w-full max-w-sm bg-white m-auto flex flex-col p-4">
@@ -39,7 +43,7 @@ const SignUp = () => {
         <div className="w-20 overflow-hidden rounded-full drop-shadow-md m-auto ">
           <img src={loginSignupImage} className="w-full" alt=".icon" />
         </div>
-        <form className="w-full py-3 flex flex-col">
+        <form className="w-full py-3 flex flex-col" onSubmit={handleSubmit}>
           <label htmlFor="firstName">First Name</label>
           <input
             type={"text"}
