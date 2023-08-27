@@ -66,14 +66,14 @@ const SignUp = () => {
     <div className="p-2 md:p-4">
       <div className="w-full max-w-sm bg-white m-auto flex flex-col p-4">
         {/* <h1 className='text-center text-2xl font-bold'>Sign up</h1> */}
-        <div className="w-20 overflow-hidden rounded-full drop-shadow-md m-auto relative ">
+        <div className="w-20 h-20 overflow-hidden rounded-full drop-shadow-md m-auto relative ">
           <img
             src={data.image ? data.image : loginSignupImage}
-            className="w-full"
+            className="w-full h-full"
             alt=".icon"
           />
           <label htmlFor="profileImage">
-            <div className="absolute bottom-0 h-1/3 bg-slate-500 w-full text-center cursor-pointer">
+            <div className="absolute bottom-0 h-1/3 bg-slate-500 bg-opacity-50 w-full text-center cursor-pointer">
               <p className="text-sm p-1 text-white">Upload</p>
             </div>
             <input
