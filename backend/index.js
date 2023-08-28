@@ -39,6 +39,7 @@ const userModel = mongoose.model("user", userSchema);
 app.get("/", (req, res) => {
   res.send("server is running");
 });
+
 /* sign up API */
 app.post("/signup", async (req, res) => {
   const { email } = req.body;
@@ -58,7 +59,43 @@ app.post("/signup", async (req, res) => {
     res.status(500).send({ message: "An error occurred" });
   }
 });
-/* login API */
+
+/* User login API */
+
+app.post("/login", async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const user = await userModel.findOne({ email: email });
+
+    if (!user) {
+      // User not found
+      return res.send({
+        message: "Email ID not registered, please sign up!",
+        alert: false,
+      });
+    }
+
+    // Create user data to send back
+    const dataSend = {
+      _id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      image: user.image,
+    };
+
+    // Send successful login response with user data
+    res.send({
+      message: "Login successful",
+      alert: true,
+      data: dataSend,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "An error occurred" });
+  }
+});
 
 /* server running */
 app.listen(PORT, () => console.log("server is running at port:" + PORT));
