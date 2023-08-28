@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { BiHide, BiShow } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/login.gif";
+import { toast } from "react-hot-toast";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({
     email: "",
@@ -24,15 +26,43 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  console.log(process.env.REACT_APP_SERVER_DOMAIN);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { email, password } = data;
+
     if (email && password) {
-      alert("successfull");
+      const url = `${process.env.REACT_APP_SERVER_DOMAIN}/login`;
+      const loginData = {
+        email: email,
+        password: password,
+      };
+
+      const fetchData = await fetch(url, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(loginData), // Send only email and password
+      });
+
+      const dataRes = await fetchData.json();
+      console.log(dataRes);
+
+      /* Display a toast notification with the response message */
+      toast(dataRes.message);
+
+      /* Navigate to the home page after a successful login */
+      if (dataRes.alert && dataRes.message === "Login is successful") {
+        navigate("/");
+      }
     } else {
-      alert("Please enter required fields");
+      // Show an alert with a message
+      alert("Please fill in all required fields");
     }
   };
+
   return (
     <div className="p-2 md:p-4">
       <div className="w-full max-w-sm bg-white m-auto flex flex-col p-4">
