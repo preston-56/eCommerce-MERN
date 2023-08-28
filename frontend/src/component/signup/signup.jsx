@@ -3,6 +3,8 @@ import loginSignupImage from "../../assets/images/login.gif";
 import { BiHide, BiShow } from "react-icons/bi";
 import { Link, useNavigate } from "react-router-dom";
 import { ImagetoBase64 } from "../../utils/imagebase";
+// eslint-disable-next-line
+import { toast } from "react-hot-toast";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -47,18 +49,33 @@ const SignUp = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  console.log(process.env.REACT_APP_SERVER_DOMAIN);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { firstName, email, password, confirmPassword } = data;
     if (firstName && email && password && confirmPassword) {
       if (password === confirmPassword) {
-        alert("successfull");
+        const url = `${process.env.REACT_APP_SERVER_DOMAIN}/signup`;
+        const fetchData = await fetch(url, {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+
+        const resData = await fetchData.json();
+        console.log(resData);
+
+        // alert(resData.message);
+        toast(resData.message);
         navigate("/login");
       } else {
-        alert("password and confirm password do not match");
+        alert("Passwords do not match");
       }
     } else {
-      alert("Please enter required fields");
+      alert("All fields are required");
     }
   };
 
