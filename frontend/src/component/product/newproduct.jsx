@@ -1,11 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { BsCloudUpload } from "react-icons/bs";
 import { ImagetoBase64 } from "../../utils/imagebase";
 
 const NewProduct = () => {
+  const [data, setData] = useState({
+    name: "",
+    category: "",
+    image: "",
+    price: "",
+    description: "",
+  });
+
   const uploadImage = async (e) => {
     const data = await ImagetoBase64(e.target.files[0]);
     console.log(data);
+    setData((preve) => {
+      return {
+        ...preve,
+        image: data,
+      };
+    });
   };
 
   return (
@@ -31,9 +45,13 @@ const NewProduct = () => {
           id="image-container"
           className="h-40 w-full bg-slate-200 rounded flex items-center justify-center cursor-pointer"
         >
-          <span className="text-5xl">
-            <BsCloudUpload />
-          </span>
+          {data.image ? (
+            <img src={data.image} className="h-full" alt=".img" />
+          ) : (
+            <span className="text-5xl">
+              <BsCloudUpload />
+            </span>
+          )}
           <input
             type={"file"}
             accept="image/*"
