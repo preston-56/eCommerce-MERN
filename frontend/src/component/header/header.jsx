@@ -56,9 +56,16 @@ const Header = () => {
                 >
                   New Product
                 </Link>
-                <Link to={"login"} className="whitespace-nowrap cursor-pointer">
-                  Login
-                </Link>
+                {userData.image ? (
+                  <p className="cursor-pointer">Logout</p>
+                ) : (
+                  <Link
+                    to={"login"}
+                    className="whitespace-nowrap cursor-pointer"
+                  >
+                    Login
+                  </Link>
+                )}
               </div>
             )}
           </div>
