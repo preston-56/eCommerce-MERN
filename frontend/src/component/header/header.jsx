@@ -3,9 +3,13 @@ import logo from "../../assets/images/logo.png";
 import { Link } from "react-router-dom";
 import { HiOutlineUserCircle } from "react-icons/hi";
 import { BsCartFill } from "react-icons/bs";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
+  const userData = useSelector((state) => state.user);
+  console.log(userData);
+
   const handleShowMenu = () => {
     setShowMenu((preve) => !preve);
   };
@@ -33,8 +37,16 @@ const Header = () => {
             </div>
           </div>
           <div className="text-slate-600" onClick={handleShowMenu}>
-            <div className="text-3xl cursor-pointer">
-              <HiOutlineUserCircle />
+            <div className="text-3xl cursor-pointer w-10 h-10 rounded-full overflow-hidden drop-shadow-md">
+              {userData.image ? (
+                <img
+                  src={userData.image}
+                  alt=".icon"
+                  className="h-full w-full"
+                />
+              ) : (
+                <HiOutlineUserCircle />
+              )}
             </div>
             {showMenu && (
               <div className="absolute right-2 bg-white py-2 px-2 shadow drop-shadow-md flex flex-col">
