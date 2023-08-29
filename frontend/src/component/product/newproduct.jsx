@@ -11,17 +11,16 @@ const NewProduct = () => {
     description: "",
   });
 
-  const handleOnChange = (e)=>{
-    const {name,value} = e.target
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
 
-    setData((preve)=>{
-        return{
-          ...preve,
-          [name] : value
-        }
-    })
-
-  }
+    setData((preve) => {
+      return {
+        ...preve,
+        [name]: value,
+      };
+    });
+  };
 
   const uploadImage = async (e) => {
     const data = await ImagetoBase64(e.target.files[0]);
@@ -41,10 +40,22 @@ const NewProduct = () => {
         className="m-auto w-full max-w-md p-3 shadow flex flex-col bg-white"
       >
         <label htmlFor="name">Name</label>
-        <input type={"text"} name="name" className="bg-slate-200 p-1 m-1" onChange={handleOnChange} value={data.name} />
+        <input
+          type={"text"}
+          name="name"
+          className="bg-slate-200 p-1 m-1"
+          onChange={handleOnChange}
+          value={data.name}
+        />
 
         <label htmlFor="category">Category</label>
-        <select name="category" id="category" className="bg-slate-200 p-1 m-1" onChange={handleOnChange} value={data.category}>
+        <select
+          name="category"
+          id="category"
+          className="bg-slate-200 p-1 m-1"
+          onChange={handleOnChange}
+          value={data.category}
+        >
           <option value="">Fruits</option>
           <option value="">Vegetables</option>
           <option value="">Chapati</option>
@@ -76,12 +87,17 @@ const NewProduct = () => {
         <label htmlFor="price" className="my-1">
           Price
         </label>
-        <input type={"text"} className="bg-slate-200 p-1 m-1" onChange={handleOnChange} value={data.price} />
+        <input
+          type={"text"}
+          className="bg-slate-200 p-1 m-1"
+          onChange={handleOnChange}
+          value={data.price}
+        />
 
         <label htmlFor="description">Description</label>
         <textarea
-          name=""
-          id=""
+          name="description"
+          value={data.description}
           rows="2"
           className="bg-slate-200 p-1 m-1 resize-none"
           onChange={handleOnChange}
