@@ -3,6 +3,8 @@ import { BiHide, BiShow } from "react-icons/bi";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/login.gif";
 import { toast } from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { loginRedux } from "../../redux/user";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -11,7 +13,12 @@ const Login = () => {
     email: "",
     password: "",
   });
-  console.log(data);
+
+  const userData = useSelector((state) => state);
+  // console.log(userData.user);
+
+  const dispatch = useDispatch();
+
   const handleShowPassword = () => {
     setShowPassword((preve) => !preve);
   };
@@ -54,9 +61,14 @@ const Login = () => {
       toast(dataRes.message);
 
       /* Navigate to the home page after a successful login */
-      if (dataRes.alert && dataRes.message === "Login is successful") {
-        navigate("/");
+      if (dataRes.alert) {
+        dispatch(loginRedux(dataRes));
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
       }
+
+      console.log(userData);
     } else {
       // Show an alert with a message
       alert("Please fill in all required fields");
