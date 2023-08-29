@@ -3,7 +3,7 @@ import { BsCloudUpload } from "react-icons/bs";
 import { ImagetoBase64 } from "../../utils/imagebase";
 
 const NewProduct = () => {
-  const uploadImage = async(e) => {
+  const uploadImage = async (e) => {
     const data = await ImagetoBase64(e.target.files[0]);
     console.log(data);
   };
@@ -28,7 +28,7 @@ const NewProduct = () => {
 
         <label htmlFor="image">Image</label>
         <div
-          id="image"
+          id="image-container"
           className="h-40 w-full bg-slate-200 rounded flex items-center justify-center cursor-pointer"
         >
           <span className="text-5xl">
