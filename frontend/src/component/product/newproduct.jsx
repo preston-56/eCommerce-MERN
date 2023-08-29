@@ -15,9 +15,9 @@ const NewProduct = () => {
   const handleOnChange = (e) => {
     const { name, value } = e.target;
 
-    setData((preve) => {
+    setData((prevData) => {
       return {
-        ...preve,
+        ...prevData,
         [name]: value,
       };
     });
@@ -26,9 +26,9 @@ const NewProduct = () => {
   const uploadImage = async (e) => {
     const data = await ImagetoBase64(e.target.files[0]);
     console.log(data);
-    setData((preve) => {
+    setData((prevData) => {
       return {
-        ...preve,
+        ...prevData,
         image: data,
       };
     });
@@ -56,7 +56,9 @@ const NewProduct = () => {
 
       console.log(fetchRes);
       toast(fetchRes.message);
-
+      /* 
+       clear input fields after submission
+        */
       setData(() => {
         return {
           name: "",
@@ -95,11 +97,11 @@ const NewProduct = () => {
           onChange={handleOnChange}
           value={data.category}
         >
-          <option value="">Fruits</option>
-          <option value="">Vegetables</option>
-          <option value="">Chapati</option>
-          <option value="">Smoothies</option>
-          <option value="">Juices</option>
+          <option value="fruits">Fruits</option>
+          <option value="vegetables">Vegetables</option>
+          <option value="chapati">Chapati</option>
+          <option value="smoothies">Smoothies</option>
+          <option value="juices">Juices</option>
         </select>
 
         <label htmlFor="image">Image</label>
