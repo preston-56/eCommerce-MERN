@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-hot-toast";
 import { BsCloudUpload } from "react-icons/bs";
 import { ImagetoBase64 } from "../../utils/imagebase";
 
@@ -33,11 +34,49 @@ const NewProduct = () => {
     });
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(data);
+
+    const { name, image, category, price } = data;
+
+    if (name && image && category && price) {
+      const fetchData = await fetch(
+        `${process.env.REACT_APP_SERVER_DOMAIN}/uploadProduct`,
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
+
+      const fetchRes = await fetchData.json();
+
+      console.log(fetchRes);
+      toast(fetchRes.message);
+
+      setData(() => {
+        return {
+          name: "",
+          category: "",
+          image: "",
+          price: "",
+          description: "",
+        };
+      });
+    } else {
+      toast("Enter required Fields");
+    }
+  };
+
   return (
     <div className="p-4">
       <form
         action=""
         className="m-auto w-full max-w-md p-3 shadow flex flex-col bg-white"
+        onSubmit={handleSubmit}
       >
         <label htmlFor="name">Name</label>
         <input
