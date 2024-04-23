@@ -47,30 +47,33 @@ const SignUp = () => {
         image: data,
       };
     });
+    console.log(process.env.REACT_APP_SERVER_DOMAIN);
   };
-
-  console.log(process.env.REACT_APP_SERVER_DOMAIN);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const { firstName, email, password, confirmPassword } = data;
     if (firstName && email && password && confirmPassword) {
       if (password === confirmPassword) {
         const url = `${process.env.REACT_APP_SERVER_DOMAIN}/signup`;
-        const fetchData = await fetch(url, {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
+        try {
+          const fetchData = await fetch(url, {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(data),
+          });
+          const resData = await fetchData.json();
+          console.log(resData);
 
-        const resData = await fetchData.json();
-        console.log(resData);
-
-        // alert(resData.message);
-        toast(resData.message);
-        navigate("/login");
+          // alert(resData.message);
+          toast(resData.message);
+          navigate("/login");
+        } catch (err) {
+          console.error("server side error", err);
+        }
       } else {
         alert("Passwords do not match");
       }
